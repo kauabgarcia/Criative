@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Planejamento financeiro · K3 Invest</title>
+<link rel="icon" href="favicon.ico?v=2" sizes="any">
+<link rel="icon" type="image/png" href="favicon-256.png?v=2" sizes="256x256">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F3F4F1; --paper:#FFFFFF; --ink:#18221F;
+    --ink-soft:#4C5852; --ink-mute:#7A857E; --line:#DCE2DC;
+    --k3-azul:#17365D; --k3-dourado:#B58A4A; --verde:#2D8068;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(circle at 12% 0%,#E6EEE8 0,transparent 34%),var(--bg);color:var(--ink);font-family:'Montserrat',sans-serif}
+  header{
+    background:rgba(255,255,255,.94);border-bottom:1px solid var(--line);
+    padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+    position:sticky;top:0;z-index:2;backdrop-filter:blur(12px);
+  }
+  header .marca{font-weight:800;font-size:19px;letter-spacing:-.04em;color:var(--k3-azul)}
+  header .marca .ponto{color:var(--k3-dourado)}
+  .sub{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute)}
+  .status-dot{width:8px;height:8px;border-radius:50%;background:var(--verde);box-shadow:0 0 0 4px #E4F1EB}
+  main{max-width:900px;margin:0 auto;padding:42px 18px 72px}
+  .abertura{margin-bottom:26px}
+  .eyebrow{margin:0 0 10px;color:var(--k3-dourado);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+  .abertura h1{font-size:clamp(26px,4vw,38px);line-height:1.12;font-weight:800;letter-spacing:-.04em;color:var(--k3-azul);margin:0 0 10px}
+  .abertura p{margin:0;color:var(--ink-soft);font-size:14px;line-height:1.7;max-width:64ch}
+  .resumo{display:flex;flex-wrap:wrap;align-items:center;gap:18px;margin-top:22px;color:var(--ink-mute);font-size:12px}
+  .resumo strong{color:var(--ink);font-weight:700}
+  .separador{width:1px;height:16px;background:var(--line)}
+  .caixa{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px;box-shadow:0 18px 45px rgba(24,34,31,.08)}
+  .caixa-topo{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 12px 14px;border-bottom:1px solid var(--line);margin-bottom:10px}
+  .caixa-topo strong{font-size:13px;color:var(--k3-azul)}
+  .etapa{color:var(--ink-mute);font-size:12px;white-space:nowrap}
+  .progresso{height:4px;background:#E7ECE8;border-radius:99px;margin:0 12px 12px;overflow:hidden}
+  .progresso span{display:block;height:100%;width:17%;background:var(--k3-dourado);border-radius:inherit;transition:width .35s ease}
+  .cognito{min-height:360px}
+  .carregando{display:flex;align-items:center;justify-content:center;gap:10px;min-height:260px;color:var(--ink-mute);font-size:13px}
+  .spinner{width:16px;height:16px;border:2px solid #DCE2DC;border-top-color:var(--k3-dourado);border-radius:50%;animation:girar .8s linear infinite}
+  .falha-form{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:260px;padding:24px;text-align:center;color:var(--ink-soft);font-size:13px;line-height:1.6}
+  .falha-form strong{color:var(--k3-azul);font-size:15px}
+  .falha-form button{margin-top:6px;border:1px solid var(--k3-azul);border-radius:6px;background:var(--k3-azul);color:#fff;padding:10px 16px;font:600 12px 'Montserrat',sans-serif;cursor:pointer}
+  .rodape-form{display:flex;justify-content:space-between;gap:16px;padding:14px 12px 2px;color:var(--ink-mute);font-size:11px;line-height:1.5}
+  .rodape-form span:last-child{text-align:right}
+  .aviso{
+    margin:20px auto 0;font-size:12px;color:var(--ink-mute);line-height:1.6;max-width:70ch;text-align:center;
+  }
+  @keyframes girar{to{transform:rotate(360deg)}}
+  @media (max-width:600px){
+    header{padding:15px 16px} header .sub{font-size:9px}
+    main{padding:28px 12px 44px} .abertura h1{font-size:28px}
+    .caixa{padding:8px;border-radius:10px}.caixa-topo{padding:8px 8px 12px}.progresso{margin-left:8px;margin-right:8px}
+    .rodape-form{display:block;padding-left:8px;padding-right:8px}.rodape-form span:last-child{display:block;text-align:left;margin-top:5px}
+  }
+</style>
+</head>
+<body>
+<header>
+  <span class="marca">K3 Invest<span class="ponto">.</span></span>
+  <span class="sub"><span class="status-dot"></span>Ambiente seguro</span>
+</header>
+
+<main>
+  <div class="abertura">
+    <p class="eyebrow">Seu planejamento financeiro</p>
+    <h1>Vamos montar o seu planejamento</h1>
+    <p>São poucas perguntas sobre objetivos, prazos e o que você já tem hoje.
+       Leva cerca de sete minutos. Você pode pausar e retomar depois sem perder
+       o que já foi preenchido.</p>
+    <div class="resumo">
+      <span><strong id="etapa-label">Etapa 1 de 14</strong></span>
+      <span class="separador"></span>
+      <span id="tempo-label">Tempo nesta sessão: 0min</span>
+      <span class="separador"></span>
+      <span id="sessao-label">Preparando formulário...</span>
+    </div>
+  </div>
+
+  <div class="caixa">
+    <div class="caixa-topo">
+      <strong>Preencha com calma</strong>
+      <span class="etapa" id="etapa-mini">1 / 14</span>
+    </div>
+    <div class="progresso" aria-label="Progresso estimado do formulário"><span id="progresso-barra"></span></div>
+    <div class="cognito">
+      <div class="carregando" id="carregando"><span class="spinner"></span>Carregando seu planejamento...</div>
+      <div id="cognito-form">
+        
+      </div>
+    </div>
+    <div class="rodape-form">
+      <span>O progresso é salvo pelo formulário enquanto você avança.</span>
+      <span>Última atualização: <strong id="ultima-atualizacao">agora</strong></span>
+    </div>
+  </div>
+
+  <p class="aviso">
+    Suas respostas são usadas apenas para montar a proposta de carteira e ficam
+    com o seu assessor na K3 Invest.
+  </p>
+</main>
+
+
+<script>
+/* =====================================================================
+   CONFIGURACAO — as duas unicas linhas que voce mexe nesta pagina.
+
+   NAO use o endereco publico do formulario aqui. O embed do Cognito pede
+   outros dois valores, que ficam na pagina Publish:
+
+     No Cognito, abra o formulario > botao Publish (barra do topo) >
+     aba Publish Code > secao Seamless. Vai aparecer um trecho assim:
+
+       script src=".../seamless.js"
+              data-key="Muy2UY3MEke97JKU-QCXPA"  data-form="38"
+
+   CHAVE = o valor de data-key (chave longa, com letras e numeros)
+   FORM  = o valor de data-form (um NUMERO)
+   ===================================================================== */
+var CHAVE = "Bqf1eSs0n02NDj056MC3aA";
+var FORM  = "4";
+
+/* Opcional: endereco publico do painel, se um dia voce publicar o servidor
+   (tunel, VPS, o que for). Com ele preenchido, esta pagina volta a mandar
+   clique, etapa e abandono para o painel em tempo real. Vazio = a pagina
+   funciona sozinha, sem servidor nenhum. */
+var PAINEL = "";
+</script>
+<script>
+(function () {
+  "use strict";
+  /* O codigo do cliente vem na propria URL: planejamento.html?c=TOKEN
+     E ele que identifica de quem e a resposta quando o formulario e
+     enviado, e o que permite mandar um link diferente para cada cliente
+     sem precisar de servidor nosso no ar. */
+  var TOKEN = (new URLSearchParams(location.search).get("c") || "")
+                .replace(/[^A-Za-z0-9_-]/g, "");
+  var BATIMENTO = 15000;      // 15s entre sinais de vida
+  var TOTAL_ETAPAS = 14;
+  var ultimaAltura = 0;
+  var etapa = 1;
+  var inicio = Date.now();
+  var encerrado = false;
+  var ultimaEtapaRegistrada = 0;
+
+  function atualizarTela() {
+    var percentual = Math.min(100, Math.max(7, Math.round((100 * etapa) / TOTAL_ETAPAS)));
+    var texto = "Etapa " + etapa + " de " + TOTAL_ETAPAS;
+    document.getElementById("etapa-label").textContent = texto;
+    document.getElementById("etapa-mini").textContent = etapa + " / " + TOTAL_ETAPAS;
+    document.getElementById("progresso-barra").style.width = percentual + "%";
+  }
+
+  function atualizarTempo() {
+    var minutos = Math.floor((Date.now() - inicio) / 60000);
+    document.getElementById("tempo-label").textContent = "Tempo nesta sessão: " + minutos + "min";
+  }
+
+  /* Monta o formulario do Cognito. Nada e escrito dentro do formulario:
+     o codigo do cliente serve so para o ACOMPANHAMENTO (quando abriu, em
+     que etapa parou, quanto tempo levou), nao para etiquetar a resposta. */
+  (function montarFormulario() {
+    var alvo = document.getElementById("cognito-form");
+    var s = document.createElement("script");
+    s.src = "https://www.cognitoforms.com/f/seamless.js";
+    s.async = true;
+    s.setAttribute("data-key", CHAVE);
+    s.setAttribute("data-form", FORM);
+
+    /* Diagnostico: sem isto, formulario que nao aparece vira quadro branco
+       e ninguem sabe por que. Aqui a propria pagina conta o que aconteceu. */
+    var diag = { versao: "v3", token: TOKEN || "(nenhum)", chave: CHAVE,
+                 form: FORM, script: "carregando..." };
+    s.onload  = function () { diag.script = "carregou"; };
+    s.onerror = function () { diag.script = "FALHOU ao baixar"; };
+    window.__K3DIAG = diag;
+
+    alvo.appendChild(s);
+
+    /* Se em 8 segundos o Cognito nao tiver desenhado nada, a pagina avisa
+       em vez de mostrar um quadro branco. Quadro branco nao diz o que
+       fazer; esta mensagem diz. */
+    setTimeout(function () {
+      /* Altura real, nao presenca de tag: o Cognito pode criar elementos e
+         nao desenhar nada, e ai a tag existe mas a tela fica branca. */
+      var desenhou = alvo.offsetHeight > 120 && alvo.innerText.trim().length > 0;
+      if (desenhou) return;
+      document.getElementById("carregando").style.display = "none";
+      var ficha = "<div style=\'margin-top:18px;padding:12px;background:#F3F4F1;"
+        + "border:1px solid #DCE2DC;border-radius:8px;text-align:left;"
+        + "font-family:monospace;font-size:12px;color:#4C5852\'>"
+        + "versao da pagina: " + diag.versao + "<br>"
+        + "codigo do cliente: " + diag.token + "<br>"
+        + "data-key: " + diag.chave + "<br>"
+        + "data-form: " + diag.form + "<br>"
+        + "seamless.js: " + diag.script + "<br>"
+        + "conteudo desenhado: " + alvo.offsetHeight + "px"
+        + "</div>";
+      alvo.innerHTML =
+        '<div style="padding:26px;text-align:center;color:#4C5852;font-size:14px;line-height:1.7">'
+        + "<strong>O formulário não carregou.</strong><br>"
+        + "Confira os valores <code>CHAVE</code> e <code>FORM</code> no topo "
+        + "desta página: eles vêm da aba <b>Publish Code › Seamless</b> do "
+        + "Cognito, não do endereço público do formulário.<br><br>"
+        + '<a href="https://www.cognitoforms.com/K3Invest1/PlanejamentoFinanceiroK3Invest" '
+        + 'style="color:#17365D;font-weight:700">Abrir o formulário direto no Cognito</a>'
+        + ficha
+        + "</div>";
+    }, 8000);
+  })();
+
+  atualizarTela();
+  setInterval(atualizarTempo, 30000);
+  setTimeout(function () {
+    document.getElementById("sessao-label").textContent = "Formulário pronto para preencher";
+    document.getElementById("carregando").style.display = "none";
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, 1800);
+
+  window.addEventListener("message", function (ev) {
+    if (!/cognitoforms\.com$/.test(new URL(ev.origin).hostname)) return;
+    document.getElementById("carregando").style.display = "none";
+    document.getElementById("sessao-label").textContent = "Formulário pronto para preencher";
+  });
+
+  function avisar(tipo, dados) {
+    if (!PAINEL || !TOKEN) return;   // pagina estatica: nao ha para onde mandar
+    var carga = JSON.stringify({ token: TOKEN, tipo: tipo, dados: dados || {} });
+    // sendBeacon sobrevive ao fechamento da aba; fetch é o plano B
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(PAINEL + "/api/track", new Blob([carga], { type: "application/json" }));
+      return;
+    }
+    fetch(PAINEL + "/api/track", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: carga, keepalive: true,
+    }).catch(function () {});
+  }
+
+  function registrarEtapaVisivel() {
+    var paginas = document.querySelectorAll(".cog-page-progress__page");
+    var ativa = document.querySelector(".cog-page-progress__page.is-active");
+    if (!ativa || !paginas.length) return;
+    var etapaAtual = Array.prototype.indexOf.call(paginas, ativa) + 1;
+    if (etapaAtual < 1 || etapaAtual === ultimaEtapaRegistrada) return;
+    ultimaEtapaRegistrada = etapaAtual;
+    etapa = Math.min(TOTAL_ETAPAS, etapaAtual);
+    atualizarTela();
+    document.getElementById("ultima-atualizacao").textContent = "agora";
+    avisar("etapa", { etapa: etapa, origem: "cognito" });
+  }
+
+  // O embed Seamless monta o Cognito no mesmo documento e marca a página ativa
+  // com is-active. O observador acompanha a troca sem ler valores dos campos.
+  var observador = new MutationObserver(function () {
+    registrarEtapaVisivel();
+  });
+  observador.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["class"] });
+  setTimeout(registrarEtapaVisivel, 500);
+
+  avisar("abertura", { largura: window.innerWidth });
+
+  // sinal de vida só enquanto a aba está à vista — aba em segundo plano não
+  // conta como alguém preenchendo
+  setInterval(function () {
+    if (!document.hidden && !encerrado) avisar("atividade");
+  }, BATIMENTO);
+
+  // O Cognito publica a altura do formulário a cada mudança de página. Não dá
+  // para ler os campos (o iframe é de outro domínio), mas a variação de altura
+  // marca a troca de etapa com boa confiabilidade.
+  window.addEventListener("message", function (ev) {
+    if (!/cognitoforms\.com$/.test(new URL(ev.origin).hostname)) return;
+    var dado = ev.data;
+    var altura = null;
+    if (typeof dado === "number") altura = dado;
+    else if (dado && typeof dado === "object") altura = dado.height || dado.h || null;
+    else if (typeof dado === "string" && /^\d+$/.test(dado)) altura = parseInt(dado, 10);
+    if (!altura) return;
+
+    if (ultimaAltura && Math.abs(altura - ultimaAltura) > 120) {
+      etapa = Math.min(TOTAL_ETAPAS, etapa + 1);
+      atualizarTela();
+      document.getElementById("ultima-atualizacao").textContent = "agora";
+      avisar("etapa", { etapa: etapa, altura: altura });
+      try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch (e) {}
+    }
+    ultimaAltura = altura;
+  });
+
+  function encerrar() {
+    if (encerrado) return;
+    encerrado = true;
+    avisar("saida", { etapa: etapa });
+  }
+
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) { avisar("saida", { etapa: etapa, motivo: "aba oculta" }); }
+    else { encerrado = false; avisar("abertura", { retorno: true }); }
+  });
+  window.addEventListener("pagehide", encerrar);
+  window.addEventListener("beforeunload", encerrar);
+})();
+</script>
+</body>
+</html>
